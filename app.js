@@ -1,11 +1,12 @@
-import { HEURISTICS, SEVERITIES, healthScore, toMarkdown } from './heuristics.js';
+import { CONTEXTS, HEURISTICS, SEVERITIES, healthScore, questionsFor, toMarkdown } from './heuristics.js';
 
 const STORAGE_KEY = 'ux-heuristics-checklist:v1';
 
 const STRINGS = {
   pt: {
     title: 'Checklist de Heurísticas de UX',
-    lede: 'Avalie uma landing page ou loja virtual com as 10 heurísticas de Nielsen. Tudo fica salvo só no seu navegador.',
+    lede: 'Avalie uma loja, SaaS, site institucional ou aplicativo com as 10 heurísticas de Nielsen. Tudo fica salvo só no seu navegador.',
+    contextLabel: 'Contexto da avaliação',
     siteLabel: 'Site ou página avaliada',
     copy: 'Copiar Markdown',
     download: 'Baixar .md',
@@ -21,7 +22,8 @@ const STRINGS = {
   },
   en: {
     title: 'UX Heuristics Checklist',
-    lede: "Review a landing page or online store against Nielsen's 10 usability heuristics. Everything is saved only in your browser.",
+    lede: "Review an online store, SaaS, institutional site or mobile app against Nielsen's 10 usability heuristics. Everything is saved only in your browser.",
+    contextLabel: 'Evaluation context',
     siteLabel: 'Site or page under review',
     copy: 'Copy Markdown',
     download: 'Download .md',
@@ -40,15 +42,16 @@ const STRINGS = {
 function load() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-    if (saved && typeof saved === 'object') return { lang: 'pt', site: '', ratings: {}, notes: {}, ...saved };
+    if (saved && typeof saved === 'object') return { lang: 'pt', context: 'ecommerce', site: '', ratings: {}, notes: {}, ...saved };
   } catch {
     // storage unavailable (private mode) — start fresh
   }
   const lang = navigator.language?.toLowerCase().startsWith('pt') ? 'pt' : 'en';
-  return { lang, site: '', ratings: {}, notes: {} };
+  return { lang, context: 'ecommerce', site: '', ratings: {}, notes: {} };
 }
 
 const state = load();
+if (!CONTEXTS.some((context) => context.id === state.context)) state.context = 'ecommerce';
 
 function save() {
   try {
@@ -91,7 +94,7 @@ function renderList() {
     const li = el('li', { className: 'card' }, [
       el('h2', { textContent: `${i + 1}. ${h.title[state.lang]}` }),
       el('p', { className: 'summary-text', textContent: h.summary[state.lang] }),
-      el('ul', { className: 'questions' }, h.questions[state.lang].map((q) => el('li', { textContent: q }))),
+      el('ul', { className: 'questions' }, questionsFor(h, state.context, state.lang).map((q) => el('li', { textContent: q }))),
       el('div', { className: 'fields' }, [
         el('label', { htmlFor: select.id, textContent: s.severity }),
         select,
@@ -121,6 +124,8 @@ function renderStatic() {
     node.textContent = s[node.dataset.i18n];
   });
   document.querySelectorAll('[data-lang]').forEach((btn) => btn.setAttribute('aria-pressed', String(btn.dataset.lang === state.lang)));
+  $('#context').replaceChildren(...CONTEXTS.map((context) => el('option', { value: context.id, textContent: context[state.lang] })));
+  $('#context').value = state.context;
 }
 
 function render() {
@@ -138,6 +143,11 @@ document.querySelectorAll('[data-lang]').forEach((btn) =>
 );
 
 $('#site').value = state.site;
+$('#context').addEventListener('change', (event) => {
+  state.context = event.target.value;
+  save();
+  renderList();
+});
 $('#site').addEventListener('input', (e) => {
   state.site = e.target.value;
   save();
