@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UX Heuristics Checklist</title>
+  <meta name="description" content="Free interactive checklist to run a Nielsen heuristic evaluation on landing pages and online stores, with severity ratings and Markdown export.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-row">
+      <div>
+        <h1 data-i18n="title"></h1>
+        <p class="lede" data-i18n="lede"></p>
+      </div>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-lang="pt">PT</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <label class="site">
+      <span data-i18n="siteLabel"></span>
+      <input id="site" type="text" autocomplete="url" placeholder="https://">
+    </label>
+
+    <aside class="summary" aria-live="polite">
+      <div class="score"><span id="score">—</span><small>/100</small></div>
+      <div>
+        <div id="progress"></div>
+        <div class="actions">
+          <button type="button" id="copy" data-i18n="copy"></button>
+          <button type="button" id="download" data-i18n="download"></button>
+          <button type="button" id="reset" class="ghost" data-i18n="reset"></button>
+        </div>
+      </div>
+    </aside>
+
+    <ol id="list" class="list"></ol>
+  </main>
+
+  <footer class="wrap foot">
+    <span data-i18n="footer"></span>
+    <a href="https://github.com/lari-pellini/ux-heuristics-checklist">GitHub</a>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

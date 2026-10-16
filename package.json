@@ -1,0 +1,7 @@
+{
+  "name": "ux-heuristics-checklist",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "license": "MIT"
+}
