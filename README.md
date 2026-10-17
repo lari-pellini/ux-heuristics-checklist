@@ -4,7 +4,7 @@
 ![HTML](https://img.shields.io/badge/HTML%2FCSS%2FJS-no%20build-e34f26)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
-Checklist interativo para fazer uma **avaliação heurística** (as 10 heurísticas de usabilidade de Jakob Nielsen) em landing pages e lojas virtuais — com perguntas práticas, escala de severidade de 0 a 4, notas e exportação em Markdown. Bilíngue: **português e inglês**.
+Checklist interativo para fazer uma **avaliação heurística** (as 10 heurísticas de usabilidade de Jakob Nielsen) em landing pages e lojas virtuais — com perguntas práticas, escala de severidade de 0 a 4, notas e exportação em Markdown. Bilíngue: **português, inglês e espanhol**.
 
 🔗 **Use online:** https://lari-pellini.github.io/ux-heuristics-checklist/
 
@@ -41,7 +41,7 @@ As perguntas-guia ficam em [`heuristics.js`](heuristics.js) — sugestões de pe
 
 ## 🇺🇸 English
 
-An interactive checklist to run a **heuristic evaluation** (Jakob Nielsen's 10 usability heuristics) on landing pages and online stores: practical guiding questions, a 0–4 severity scale, notes, and Markdown export. The interface is available in **Portuguese and English**, and everything is stored only in your browser.
+An interactive checklist to run a **heuristic evaluation** (Jakob Nielsen's 10 usability heuristics) on landing pages and online stores: practical guiding questions, a 0–4 severity scale, notes, and Markdown export. The interface is available in **Portuguese, English and Spanish**, and everything is stored only in your browser.
 
 ## License
 
