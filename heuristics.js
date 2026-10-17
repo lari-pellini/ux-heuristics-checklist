@@ -1,5 +1,6 @@
 // Jakob Nielsen's 10 usability heuristics, with guiding questions written for marketing sites,
-// landing pages and online stores. Descriptions are our own short paraphrases.
+// landing pages and online stores, with additional product contexts below.
+// Descriptions are our own short paraphrases.
 export const HEURISTICS = [
   {
     id: 'status',
@@ -131,6 +132,58 @@ export const SEVERITIES = [
   { value: 4, en: '4 · Catastrophe', pt: '4 · Catastrófico' },
 ];
 
+export const CONTEXTS = [
+  { id: 'ecommerce', en: 'E-commerce', pt: 'E-commerce' },
+  { id: 'saas', en: 'SaaS', pt: 'SaaS' },
+  { id: 'institutional', en: 'Institutional site', pt: 'Site institucional' },
+  { id: 'app', en: 'Mobile app', pt: 'Aplicativo' },
+];
+
+const CONTEXT_QUESTIONS = {
+  saas: {
+    status: { en: 'Are saving, syncing and background jobs visibly in progress or complete?', pt: 'O sistema mostra quando está salvando, sincronizando ou concluindo tarefas em segundo plano?' },
+    'real-world': { en: 'Do workspace, plan and billing terms match the language of the customer’s job?', pt: 'Os termos de espaço de trabalho, plano e cobrança fazem sentido para o trabalho do cliente?' },
+    control: { en: 'Can people cancel a workflow or undo a change without losing unrelated work?', pt: 'É possível cancelar um fluxo ou desfazer uma alteração sem perder outros trabalhos?' },
+    consistency: { en: 'Do shared controls behave consistently across dashboards, settings and billing?', pt: 'Os controles se comportam da mesma forma nos painéis, nas configurações e na cobrança?' },
+    'error-prevention': { en: 'Are workspace deletion, member removal and plan changes confirmed before taking effect?', pt: 'Excluir um espaço, remover um membro ou mudar de plano exige confirmação antes de aplicar a ação?' },
+    recognition: { en: 'Are the current workspace, active filters and available permissions visible?', pt: 'O espaço atual, os filtros ativos e as permissões disponíveis ficam visíveis?' },
+    flexibility: { en: 'Can frequent users reuse saved views, templates or keyboard shortcuts?', pt: 'Usuários frequentes podem reutilizar visualizações salvas, modelos ou atalhos de teclado?' },
+    minimalist: { en: 'Does the dashboard prioritise the next task over upsells and secondary metrics?', pt: 'O painel prioriza a próxima tarefa em vez de ofertas de plano e métricas secundárias?' },
+    errors: { en: 'Do failed imports or saves explain how to retry without losing entered data?', pt: 'Falhas ao importar ou salvar explicam como tentar novamente sem perder os dados digitados?' },
+    help: { en: 'Is task-specific help available beside unfamiliar settings and integration steps?', pt: 'Há ajuda específica perto de configurações desconhecidas e etapas de integração?' },
+  },
+  institutional: {
+    status: { en: 'Do searches and contact-form submissions clearly show progress and confirmation?', pt: 'Buscas e envios de formulários de contato mostram progresso e confirmação com clareza?' },
+    'real-world': { en: 'Are services and departments named in the public’s language rather than internal acronyms?', pt: 'Serviços e departamentos usam a linguagem do público em vez de siglas internas?' },
+    control: { en: 'Can visitors leave a document or external service and return to the original page?', pt: 'A pessoa pode sair de um documento ou serviço externo e voltar à página de origem?' },
+    consistency: { en: 'Are navigation, contact details and service names consistent between departments?', pt: 'A navegação, os contatos e os nomes dos serviços são consistentes entre departamentos?' },
+    'error-prevention': { en: 'Are eligibility, required documents and deadlines clear before starting an application?', pt: 'Critérios, documentos necessários e prazos ficam claros antes de iniciar uma solicitação?' },
+    recognition: { en: 'Can visitors see their current section and find key services without remembering the menu?', pt: 'A pessoa consegue ver em que seção está e encontrar serviços sem memorizar o menu?' },
+    flexibility: { en: 'Can returning visitors reach common services directly through search or shortcuts?', pt: 'Quem retorna consegue acessar serviços comuns diretamente pela busca ou por atalhos?' },
+    minimalist: { en: 'Are essential service information and contact options easy to distinguish from announcements?', pt: 'É fácil distinguir informações essenciais de serviços e contatos dos comunicados?' },
+    errors: { en: 'Do broken links and unavailable services offer a useful alternative or contact?', pt: 'Links quebrados e serviços indisponíveis oferecem uma alternativa útil ou um contato?' },
+    help: { en: 'Are opening hours, service requirements and human support easy to find?', pt: 'Horários, requisitos dos serviços e atendimento humano são fáceis de encontrar?' },
+  },
+  app: {
+    status: { en: 'Does the app clearly show loading, offline status and pending synchronisation?', pt: 'O aplicativo mostra claramente o carregamento, a falta de conexão e a sincronização pendente?' },
+    'real-world': { en: 'Do gestures, icons and labels match familiar mobile conventions?', pt: 'Gestos, ícones e rótulos seguem convenções conhecidas de aplicativos móveis?' },
+    control: { en: 'Does system back navigation work without discarding unsaved input unexpectedly?', pt: 'Voltar pelo sistema funciona sem descartar dados não salvos de forma inesperada?' },
+    consistency: { en: 'Are navigation and touch controls consistent between screens and platform conventions?', pt: 'A navegação e os controles de toque são consistentes entre telas e com a plataforma?' },
+    'error-prevention': { en: 'Are destructive actions protected against accidental taps and permissions requested in context?', pt: 'Ações destrutivas evitam toques acidentais e permissões são solicitadas no contexto certo?' },
+    recognition: { en: 'Are selected tabs, current filters and important actions visible on small screens?', pt: 'Abas selecionadas, filtros atuais e ações importantes ficam visíveis em telas pequenas?' },
+    flexibility: { en: 'Can frequent tasks be completed with few taps without relying on hidden gestures?', pt: 'Tarefas frequentes podem ser concluídas com poucos toques, sem depender de gestos ocultos?' },
+    minimalist: { en: 'Does each screen prioritise its main action without crowding touch targets?', pt: 'Cada tela prioriza sua ação principal sem apertar as áreas de toque?' },
+    errors: { en: 'After connection or permission failures, can people retry without re-entering their work?', pt: 'Após falhas de conexão ou permissão, é possível tentar novamente sem redigitar o trabalho?' },
+    help: { en: 'Can people find help for permissions, offline use and account recovery inside the app?', pt: 'É possível encontrar ajuda sobre permissões, uso sem conexão e recuperação da conta no aplicativo?' },
+  },
+};
+
+/** Return guidance for the selected product context, preserving the original store checklist. */
+export function questionsFor(heuristic, context = 'ecommerce', lang = 'en') {
+  const question = CONTEXT_QUESTIONS[context]?.[heuristic.id]?.[lang];
+  return question ? [question] : heuristic.questions[lang];
+}
+
 /** 100 = no problems found, 0 = every evaluated heuristic is a catastrophe. */
 export function healthScore(ratings) {
   const values = Object.values(ratings).filter((v) => Number.isInteger(v));
@@ -139,12 +192,15 @@ export function healthScore(ratings) {
   return Math.round(100 - avg * 25);
 }
 
-export function toMarkdown({ site, ratings, notes }, lang = 'en') {
+export function toMarkdown({ site, ratings, notes, context = 'ecommerce' }, lang = 'en') {
   const t = (obj) => obj[lang];
   const label = (v) => (Number.isInteger(v) ? t(SEVERITIES[v]) : lang === 'pt' ? 'Não avaliado' : 'Not evaluated');
   const score = healthScore(ratings);
+  const selectedContext = CONTEXTS.find((item) => item.id === context) || CONTEXTS[0];
   const lines = [
     `# ${lang === 'pt' ? 'Avaliação heurística' : 'Heuristic evaluation'}${site ? ` — ${site}` : ''}`,
+    '',
+    `${lang === 'pt' ? 'Contexto' : 'Context'}: ${selectedContext[lang]}`,
     '',
     `${lang === 'pt' ? 'Pontuação' : 'Score'}: ${score === null ? '—' : `${score}/100`}`,
     '',
